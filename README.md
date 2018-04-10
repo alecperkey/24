@@ -39,7 +39,7 @@ Upgrading to a new version of React Native requires updating the `react-native`,
 
 If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
 
-### `npm start`
+### `yarn start`
 
 Runs your app in development mode.
 
@@ -48,22 +48,36 @@ Open it in the [Expo app](https://expo.io) on your phone to view it. It will rel
 Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
 
 ```
-npm start -- --reset-cache
+yarn start -- --reset-cache
 # or
 yarn start -- --reset-cache
 ```
 
-#### `npm test`
+#### `yarn test`
 
 Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
 
-#### `npm run ios`
+#### `yarn ios`
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+Like `yarn start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
 
-#### `npm run android`
+#### `yarn android`
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+__Warning:__ Suggested not to use this script for development, because of [issue 81 in CRNA](https://github.com/react-community/create-react-native-app/issues/81#issuecomment-331008285). Instead use below `exp` commands
+
+Like `yarn start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+
+#### `yarn exp:start:android`
+
+Runs `exp start --lan`, which packages the android (and ios?) app with Expo's React Native packager & runs abd reverse, and opens tunnel for better debugging experienced and to solve networking between emulator (Genymotion) and windows on local LAN network. __Requires__ configuring REACT_NATIVE_PACKAGER_HOSTNAME environmental variable to your LAN's IPv4 address. See below link for more details:
+
+https://docs.expo.io/versions/latest/guides/debugging.html#to-ensure-the-best-debugging-experience-first-change-your-host-type-in-xde-to-lan-or-localhost-if-you-use-tunnel-with-debugging-enabled-you-are-likely-to-experience-so-much-latency-that-your-app-is-unusable-while-here-also-ensure-that-development-mode-is-checked
+
+!TBD test with iOS.
+
+#### `yarn exp:android`
+
+Runs 'exp android', which opens the app (which must be already packaged using `yarn exp:start:android`) on connected adb devices on LAN (such as Genymotion emulator, stock android emulators, or real device). See expo docs link above for more info.
 
 ##### Using Android Studio's `adb`
 
